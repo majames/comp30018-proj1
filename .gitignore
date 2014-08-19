@@ -1,0 +1,4 @@
+# Ignore the large data files
+geonames/
+tweets/
+code/location_data/

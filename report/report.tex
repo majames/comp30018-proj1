@@ -1,0 +1,71 @@
+\documentclass[11pt,a4paper]{article}
+\author{Michael James, 390198}
+
+\usepackage[left=20mm,right=20mm,top=20mm,bottom=20mm]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage[hyphens]{url}
+
+\begin{document}
+
+\title{Project 1: Approximate String Search for Geolocation of Tweets}
+\maketitle
+
+\section{Introduction}
+
+Decide on which algorithms I will attempt... browse the internet for python modules.\\\\
+Python modules include:
+
+\begin{itemize}
+	\item Jellyfish - offers edit distance matching via conventional methods and phonetics
+	\begin{itemize}
+		\item Documentation: \url{https://github.com/sunlightlabs/jellyfish}
+	\end{itemize}		
+	
+	\item FuzzyWuzzy - relies on  \textbf{difflib} library and clever heuristics to determine how closely strings match. Is a global edit distance library.
+	\begin{itemize}
+		\item Heuristics explanation: \url{http://chairnerd.seatgeek.com/fuzzywuzzy-fuzzy-string-matching-in-python/}
+		\item Documentation: \url{https://github.com/seatgeek/fuzzywuzzy}
+	\end{itemize}
+		
+	\item Marisa-trie
+	
+	\item PyTrie
+	\begin{itemize}
+		\item Documentation: \url{http://pythonhosted.org/PyTrie/}
+	\end{itemize}
+	
+	\item Suffix Array
+
+\end{itemize}
+
+
+\section{Sample Input Sets}
+
+\subsection{Sample Set A}
+Raw lower-case US locations.
+
+\subsection{Sample Set B}
+Raw lower-case US locations have had the following modifications:
+\begin{itemize}
+	\item Sort - Strings based on Lexicographic Ordering
+	\item Remove - Duplicates
+	\item Remove - Locations that contain characters which are non-alphabetic
+\end{itemize}
+
+\subsection{Sample Set C}
+Raw lower-case US locations have had the following modifications:
+\begin{itemize}
+	\item Sort - Strings based on Lexicographic Ordering	
+	\item Remove - Duplicates
+	\item Remove - Locations that contain characters which are non-alphabetic
+	\item Remove - Dictionary of questionable terms, including: 'school', 'oil field', 'college', 'hospital', 'church', '(historical)', 'department', 'air field', 'center',
+	'clinic', etc... 
+\end{itemize}
+
+\section{Notes}
+there are a fuck ton of 'new yorks' with a bunch of other shit... wat do??
+
+
+
+
+\end{document}
