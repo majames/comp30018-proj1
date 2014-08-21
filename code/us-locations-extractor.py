@@ -11,6 +11,7 @@ def parse_us_locations_file(filename, num_lines=None):
     # Read in file, ignore windows vs unix line endings
     f = open(filename, 'rU')
     lines = f.readlines()
+    f.close()
     
     if num_lines:
         lines = random.sample(lines, num_lines)
@@ -53,6 +54,7 @@ def write_locations_to_file(dest_filename, locations):
     """ Writes the locations specified to a .csv """
     f = open(dest_filename, 'w')
     f.writelines(locations)
+    f.close()
 
 
 def main():
