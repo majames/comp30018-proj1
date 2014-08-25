@@ -1,0 +1,41 @@
+Python modules include:
+
+	Jellyfish - offers edit distance matching via conventional methods and phonetics
+		Documentation:https://github.com/sunlightlabs/jellyfish		
+	
+	FuzzyWuzzy - relies on 'difflib' library and clever heuristics to determine how closely strings match. Is a global edit distance library.
+		Heuristics explanation: http://chairnerd.seatgeek.com/fuzzywuzzy-fuzzy-string-matching-in-python/
+		Documentation: https://github.com/seatgeek/fuzzywuzzy
+		
+	Marisa-trie
+	
+	PyTrie
+		Documentation: http://pythonhosted.org/PyTrie/
+	
+	Suffix Array
+
+
+
+Sample Input Sets:
+
+Sample Set A
+	Raw lower-case US locations.
+
+Sample Set B:
+	Raw lower-case US locations have had the following modifications:
+		Sort - Strings based on Lexicographic Ordering
+		Remove - Duplicates
+		Remove - Locations that contain characters which are non-alphabetic
+
+\subsection{Sample Set C}
+Raw lower-case US locations have had the following modifications:
+\begin{itemize}
+	\item Sort - Strings based on Lexicographic Ordering	
+	\item Remove - Duplicates
+	\item Remove - Locations that contain characters which are non-alphabetic
+	\item Remove - Dictionary of questionable terms, including: 'school', 'oil field', 'college', 'hospital', 'church', '(historical)', 'department', 'air field', 'center',
+	'clinic', etc... 
+\end{itemize}
+
+\section{Notes}
+there are a fuck ton of 'new yorks' with a bunch of other shit... wat do??

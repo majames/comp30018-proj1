@@ -11,61 +11,50 @@
 \maketitle
 
 \section{Introduction}
+Efficient and effective approximate string has had a profoundly positive impact on modern society. Sophisticated approximate string matching techniques have greatly improved the results of the search engines millions of people interact with daily, have revolutionised how various industries do cooperate and even granted the deaf the ability to speak.\\\\
+The aim of Project 1 is to explore the effectiveness of various string approximate matching techniques in the context of identifying location names present within the body of a Tweet.
 
-Decide on which algorithms I will attempt... browse the internet for python modules.\\\\
-Python modules include:
+\section{Input Data Processing}  
 
-\begin{itemize}
-	\item Jellyfish - offers edit distance matching via conventional methods and phonetics
-	\begin{itemize}
-		\item Documentation: \url{https://github.com/sunlightlabs/jellyfish}
-	\end{itemize}		
-	
-	\item FuzzyWuzzy - relies on  \textbf{difflib} library and clever heuristics to determine how closely strings match. Is a global edit distance library.
-	\begin{itemize}
-		\item Heuristics explanation: \url{http://chairnerd.seatgeek.com/fuzzywuzzy-fuzzy-string-matching-in-python/}
-		\item Documentation: \url{https://github.com/seatgeek/fuzzywuzzy}
-	\end{itemize}
-		
-	\item Marisa-trie
-	
-	\item PyTrie
-	\begin{itemize}
-		\item Documentation: \url{http://pythonhosted.org/PyTrie/}
-	\end{itemize}
-	
-	\item Suffix Array
+\subsection{Data Extraction}
 
-\end{itemize}
+A sample of 2,153,222 locations and 3,845,622 tweets from 101,277 users were provided as part of the project. The tweets and locations had to be extracted into separate files, which could be easily worked with, in the context of evaluating the effectiveness and efficiency of the string approximation techniques.\\\\
+Tweets with the same associated Twitter account user identifier were combined into a single line of the modified Tweets file. A single line of the modified tweets input file consisted of the users Twitter identifier followed by space separated text consisting of all of the users 'Tweets'.  
 
+\subsection{Simplifications}
 
-\section{Sample Input Sets}
+A requirement of the project specification was to remove all non-alphabetic characters, excluding space, from the body of the tweet text. Therefore, for the locations list to remain consistent with the modified tweet body's all non-alphabetic characters, excluding space, were also removed from the locations list. \\\\
+Reducing the alphabet size of the locations and tweets resulted in a non-negligible amount of words containing fewer than 3 characters. Words of one to two characters of length were considered to carry little entropy in determining which locations a Twitter user had 'tweeted' and were removed to further reduce processing time. \\\\
+After thorough inspection of the locations file, significant overlap between the start of many location strings could be seen. To further reduce the sample size locations which had their first two words or more in common were combined into one location containing the common substring.\\\\       
+Processing the locations list resulted in duplicate location entries, the duplicate locations were removed to avoid using time processing said duplicates.\\\\
+After processing the size of the input tweet file and location file had been significantly reduced (Table \ref{table:input-table}).
 
-\subsection{Sample Set A}
-Raw lower-case US locations.
+\begin{table} [th]
+\caption{Input Data Size Reduction}
+\begin{center}
+	\begin{tabular}{| c | c | c |}
+	\hline
+	 &  \textbf{Word Count} & \textbf{Line Count}\\
+	\hline
+	\textbf{Raw Locations Input File} & 40,342,945 & 2,153,222\\
+	\hline
+	\textbf{Processed Locations Input File} & 2,114,363 & 830,446\\
+	\hline
+	 &  & \\
+	\hline
+	\textbf{Raw Tweets Input File} & xxxxx & xxxx\\
+	\hline
+	\textbf{Processed Tweets Input File} & 38,886,610 & 101,277\\
+	\hline
+	\end{tabular}
+\end{center}
+\label{table:input-table}
+\end{table}
 
-\subsection{Sample Set B}
-Raw lower-case US locations have had the following modifications:
-\begin{itemize}
-	\item Sort - Strings based on Lexicographic Ordering
-	\item Remove - Duplicates
-	\item Remove - Locations that contain characters which are non-alphabetic
-\end{itemize}
+\section{String Approximation Algorithms}
 
-\subsection{Sample Set C}
-Raw lower-case US locations have had the following modifications:
-\begin{itemize}
-	\item Sort - Strings based on Lexicographic Ordering	
-	\item Remove - Duplicates
-	\item Remove - Locations that contain characters which are non-alphabetic
-	\item Remove - Dictionary of questionable terms, including: 'school', 'oil field', 'college', 'hospital', 'church', '(historical)', 'department', 'air field', 'center',
-	'clinic', etc... 
-\end{itemize}
+\section{Results}
 
-\section{Notes}
-there are a fuck ton of 'new yorks' with a bunch of other shit... wat do??
-
-
-
+\section{Conclusion}
 
 \end{document}

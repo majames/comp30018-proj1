@@ -36,15 +36,42 @@ def modify_us_locations(locations, flag):
                      for location in locations]
 
     if flag == '-B' or flag == '-C':
-        # remove locations that contain characters which are non-alphabetic
-        locations = [location + '\n' for location in locations
-                     if re.search(r'^[a-z ]+$', location)]
+        # remove the non-alphabetic characters from locations (excluding space)
+        locations = [re.sub(r'[^a-z ]', '', location) 
+                     for location in locations]
+
+        # remove words of 2 characters or less, additional white space
+        mlocations = []
+        for location in locations:
+            mwords = []
+            for word in location.split():
+                if len(word) > 2:
+                    mwords.append(word)
+            # don't add modified locations which consist of no words or
+            # one word which is 4 characters or less
+            if mwords and (len(mwords) >= 2 or len(mwords[0]) >= 5):
+                mlocations.append(' '.join(mwords))
 
         # remove the duplicate locations name
-        locations = list(set(locations))
+        locations = list(set(mlocations))
 
         # sort the locations lexiographically
         locations = sorted(locations)
+
+        # create a list of words
+        locations = [location.split(' ') for location in locations]
+        
+        # do not add lists which share the first 2 words or more in common
+        mlocations = []
+        last = None
+        for location in locations:
+            if (not last or len(location) == 1 or len(last) == 1 
+                or last[0:2] != location[0:2]):
+                mlocations.append(location)
+                last = location
+
+        # join the location lists into a single string again and add a newline
+        locations = [' '.join(mlocation) + '\n' for mlocation in mlocations]
 
     return locations
 
@@ -64,7 +91,8 @@ def main():
         src_filename = sys.argv[2]
         dest_filename = sys.argv[3] 
     else:
-        print('usage: extractor.py -FLAG source_file destination_file [num_lines]')
+        print('usage: extractor.py -FLAG source_file destination_file' 
+              '[num_lines]')
         sys.exit()
 
     if len(sys.argv) == 5:
