@@ -1,20 +1,17 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """ Program extracts the location names from a file with 
     the same format as US.txt """
 
 import sys
-import random
 import re
+from nltk.corpus import stopwords
 
-def parse_us_locations_file(filename, num_lines=None):
+def parse_us_locations_file(filename):
     """ Reads in the raw locations names from filename """
     # Read in file, ignore windows vs unix line endings
     f = open(filename, 'rU')
     lines = f.readlines()
     f.close()
-    
-    if num_lines:
-        lines = random.sample(lines, num_lines)
 
     locations = []
     for line in lines:
@@ -40,38 +37,47 @@ def modify_us_locations(locations, flag):
         locations = [re.sub(r'[^a-z ]', '', location) 
                      for location in locations]
 
-        # remove words of 2 characters or less, additional white space
+        # remove words of 2 characters or less, common words and 
+        # additional white space
+        stop = stopwords.words('english')
         mlocations = []
         for location in locations:
-            mwords = []
-            for word in location.split():
-                if len(word) > 2:
-                    mwords.append(word)
-            # don't add modified locations which consist of no words or
-            # one word which is 4 characters or less
-            if mwords and (len(mwords) >= 2 or len(mwords[0]) >= 5):
-                mlocations.append(' '.join(mwords))
+            # remove small words
+            location_words = [word for word in location.split() if
+                              len(word) > 2]
+
+            # remove common english words
+            location_words = [word for word in location_words if 
+                              word not in stop]
+
+            # only append the location if it consists of one or more words
+            if location_words:
+                mlocations.append(' '.join(location_words))
+        locations = mlocations
 
         # remove the duplicate locations name
-        locations = list(set(mlocations))
+        locations = list(set(locations))
 
         # sort the locations lexiographically
         locations = sorted(locations)
 
         # create a list of words
-        locations = [location.split(' ') for location in locations]
+        locations_words = [location.split(' ') for location in locations]
         
-        # do not add lists which share the first 2 words or more in common
-        mlocations = []
+        # remove locations which share the first 2 words or more in common
+        locations = []
         last = None
-        for location in locations:
-            if (not last or len(location) == 1 or len(last) == 1 
-                or last[0:2] != location[0:2]):
-                mlocations.append(location)
-                last = location
-
-        # join the location lists into a single string again and add a newline
-        locations = [' '.join(mlocation) + '\n' for mlocation in mlocations]
+        for location_words in locations_words:
+            if (not last or len(location_words) == 1 or len(last) == 1 
+                or last[0:2] != location_words[0:2]):
+                locations.append(location_words)
+                last = location_words
+        
+        # join the location lists into a single string again
+        locations = [' '.join(location) for location in locations]
+    
+    # add a newline at the end of each location
+    locations = [location + '\n' for location in locations]
 
     return locations
 
@@ -86,22 +92,20 @@ def write_locations_to_file(dest_filename, locations):
 
 def main():
     """ Entry point of the program """
-    if len(sys.argv) >= 4 and re.search(r'-[ABC]', sys.argv[1]):
+    if len(sys.argv) == 4 and re.search(r'-[ABC]', sys.argv[1]):
         flag = sys.argv[1]
         src_filename = sys.argv[2]
         dest_filename = sys.argv[3] 
     else:
-        print('usage: extractor.py -FLAG source_file destination_file' 
-              '[num_lines]')
+        print('usage: extractor.py -FLAG source_file destination_file')
         sys.exit()
 
-    if len(sys.argv) == 5:
-        num_lines = int(sys.argv[4])
-        locations = parse_us_locations_file(src_filename, num_lines=num_lines)
-    else:
-        locations = parse_us_locations_file(src_filename)
 
+    locations = parse_us_locations_file(src_filename)
+    
+    # modify locations list based on clever heuristics
     locations = modify_us_locations(locations, flag)
+    
     write_locations_to_file(dest_filename, locations)
 
 

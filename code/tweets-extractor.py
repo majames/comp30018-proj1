@@ -1,8 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """ Tweets extractor """
 
 import re
 import sys
+from nltk.corpus import stopwords
 
 def read_tweets_file(filename):
     """ Read the raw user id.-tweet tupples in 
@@ -12,7 +13,7 @@ def read_tweets_file(filename):
     f.close()
 
     # look for a time-stamp which signifies the end of a tweet
-    tweets = re.findall(r'(\d+)\t\d+\t(.+)\d+-\d+-\d+ \d+:\d+:\d+', text)
+    tweets = re.findall(r'(\d+)\t(\d+)\t(.+)\d+-\d+-\d+ \d+:\d+:\d+', text)
 
     return tweets
 
@@ -20,28 +21,31 @@ def modify_tweets(tweets, flag):
     """ Modify the raw user id.-tweet tupples to be lower case and contain only 
         alphabetic characters (including space)"""
     
-    # sort the tweets by user id
+    # sort the tweets by user id then tweet id then tweet text 
     tweets = sorted(tweets)
     
+    stop = stopwords.words('english')
     mtweets = []
     for tweet in tweets:
         # make all letters in the tweet text lower case
-        mtweet_text = tweet[1].lower()
+        mtweet_text = tweet[2].lower()
 
         # remove all non-alphabetic characters (excluding space)
         mtweet_text = re.sub(r'[^a-z ]', '', mtweet_text)
 
-        # remove words that are 2 characters or less
         if (flag == '-B'):
             mtweet_words = mtweet_text.split(' ')
+
+            # remove words that are 2 characters or less
             mtweet_words = [word for word in mtweet_words if len(word) > 2]
+            
+            # remove common words
+            mtweet_words = [word for word in mtweet_words if word not in stop]
+
             mtweet_text = ' '.join(mtweet_words)
 
-        # if the tweet id already has an entry append the tweet text
-        if mtweets and mtweets[-1][0] == tweet[0]:
-            mtweets[-1] = (mtweets[-1][0], mtweets[-1][1] + ' ' + mtweet_text)
-        else:
-            mtweets.append((tweet[0], mtweet_text))
+        if mtweet_text:
+            mtweets.append((tweet[0], tweet[1], mtweet_text))
 
     return mtweets
 

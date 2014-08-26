@@ -5,8 +5,38 @@
 import sys
 import myparser
 import timeit
+import subdist
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+
+
+def dynamic_levenshtein(tweets, locations):
+    d = {}
+
+    for tweet in tweets:
+        matches = []
+        tweet_text = tweet[2]
+
+        for location in locations:
+            score = subdist.get_score(unicode(location), unicode(tweet_text))
+            if score > 0.90:
+                matches.append((location, score))
+                # debugging
+                # print(matches[-1])
+        
+        if d.get(tweet[0]):
+            d[tweet[0]].append((tweet[1], matches))
+        else:
+            d[tweet[0]] = [(tweet[1], matches)]
+
+
+    for key in d.keys():
+        print('Twitter User ' + key + ':')
+        for tweet_match in d[key]:
+            print(tweet_match)
+        print('')
+
+    
 
 def token_set_alignment(tweets, locations):
     # initialise the list of matches and dictionary of
@@ -15,16 +45,17 @@ def token_set_alignment(tweets, locations):
     matches = []
 
     for tweet in tweets:
+        tweet_text = tweet[2]
         for location in locations:
-            score = fuzz.token_set_ratio(tweet[1], location)
-            if score >= 90:
+            score = fuzz.token_set_ratio(location, tweet_text)
+            if score >= 95:
                 matches.append((location, score))
                 print(matches[-1])
-        d[tweet[0]] = matches
+        d[(tweet[0], tweet[1])] = matches
 
     print(d)
 
-def global_edit_alignment(tweets, locations):
+def brutforce_levenshtein(tweets, locations):
     """ Tokenize the location and the tweets into words,
         and compare """
     # initialise the list of matches and dictionary of
@@ -33,8 +64,7 @@ def global_edit_alignment(tweets, locations):
     matches = []
 
     for tweet in tweets:
-        tweet_words = tweet[1].split(' ')
-        print(tweet_words)
+        tweet_words = tweet[2].split(' ')
         for location in locations:
             num_location_words = len(location.split(' '))
             for i in range(0, len(tweet_words)):
@@ -45,8 +75,7 @@ def global_edit_alignment(tweets, locations):
                     # debugging
                     print(matches[-1])
 
-        d[tweet[0]] = matches
-        print(d)
+        d[(tweet[0], tweet[1])] = matches
         matches = []
 
 
@@ -63,8 +92,11 @@ def main():
 
     locations = myparser.parse_locations(sys.argv[2])
 
-    #global_edit_alignment(tweets, locations)
-    print(timeit.timeit(lambda: token_set_alignment(tweets, locations), number=1))
+    #brutforce_levenshtein(tweets, locations)
+    
+    #dynamic_levenshtein(tweets, locations)
+    print(timeit.timeit(lambda: dynamic_levenshtein(tweets, locations), number=1))
+    #print(timeit.timeit(lambda: token_set_alignment(tweets, locations), number=1))
     #token_set_alignment(tweets, locations)
 
 
