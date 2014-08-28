@@ -5,6 +5,7 @@
 import sys
 import re
 from nltk.corpus import stopwords
+from nltk.stem.porter import *
 
 def parse_us_locations_file(filename):
     """ Reads in the raw locations names from filename """
@@ -37,13 +38,17 @@ def modify_us_locations(locations, flag):
         locations = [re.sub(r'[^a-z ]', '', location) 
                      for location in locations]
 
-        # remove words of 2 characters or less, common words and 
-        # additional white space
+        # stem words, then remove words of 2 characters or less, 
+        # common words and additional white space
         stop = stopwords.words('english')
+        stemmer = PorterStemmer()
         mlocations = []
         for location in locations:
+            # stem the location words
+            location_words = [stemmer.stem(word) for word in location.split()]
+
             # remove small words
-            location_words = [word for word in location.split() if
+            location_words = [word for word in location_words if
                               len(word) > 2]
 
             # remove common english words

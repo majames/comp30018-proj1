@@ -4,6 +4,7 @@
 import re
 import sys
 from nltk.corpus import stopwords
+from nltk.stem.porter import *
 
 def read_tweets_file(filename):
     """ Read the raw user id.-tweet tupples in 
@@ -32,9 +33,13 @@ def modify_tweets(tweets, flag):
 
         # remove all non-alphabetic characters (excluding space)
         mtweet_text = re.sub(r'[^a-z ]', '', mtweet_text)
-
+        stemmer = PorterStemmer()
         if (flag == '-B'):
+            # split the tweet into words
             mtweet_words = mtweet_text.split(' ')
+
+            # stem the tweet words
+            mtweet_words = [stemmer.stem(word) for word in mtweet_words]
 
             # remove words that are 2 characters or less
             mtweet_words = [word for word in mtweet_words if len(word) > 2]
