@@ -5,30 +5,28 @@
 import sys
 import myparser
 import timeit
-#import subdist
 import mysubdist
-import swalign
-from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
+import mysmithwaterman
+import Levenshtein
 
-def token_set_alignment(tweets, locations):
-    d = {}
+# def token_set_alignment(tweets, locations):
+#     d = {}
 
-    for tweet in tweets:
-        matches = []
-        tweet_text = tweet[2]
-        for location in locations:
-            score = fuzz.token_set_ratio(location, tweet_text)
-            if score >= 90:
-                matches.append((location, score))
+#     for tweet in tweets:
+#         matches = []
+#         tweet_text = tweet[2]
+#         for location in locations:
+#             score = fuzz.token_set_ratio(location, tweet_text)
+#             if score >= 90:
+#                 matches.append((location, score))
         
-        if d.get(tweet[0]):
-            d[tweet[0]].append((tweet[1], matches))
-        else:
-            d[tweet[0]] = [(tweet[1], matches)]
+#         if d.get(tweet[0]):
+#             d[tweet[0]].append((tweet[1], matches))
+#         else:
+#             d[tweet[0]] = [(tweet[1], matches)]
 
-    print('\nToken Set Alignment\n')
-    print_matches_dictionary(d)
+#     print('\nToken Set Alignment\n')
+#     print_matches_dictionary(d)
 
 
 
@@ -65,47 +63,20 @@ def smith_waterman(tweets, locations):
         and the location queries """
     d = {}
 
-    # setup score for a match as +1 and a score for a
-    # deletion, insertion and replacement as -1
-    scoring = swalign.NucleotideScoringMatrix(1, -1)
-    sw = swalign.LocalAlignment(scoring)
-
     for tweet in tweets:
         matches = []
         for location in locations:
-            score = sw.align(tweet[2], location)
-            ratio = float(score.score) / len(location) 
-            if ratio >= 0.90:
-                matches.append((location, ratio))
+            score = mysmithwaterman.get_score(unicode(location), unicode(tweet[2]))
+            if score >= 0.90:
+                matches.append((location, score))
 
         if d.get(tweet[0]):
             d[tweet[0]].append((tweet[1], matches))
         else:
             d[tweet[0]] = [(tweet[1], matches)]
 
-    print('\nWaterman-Smith Algorithm\n')
+    print('\nSmith-Waterman Algorithm\n')
     print_matches_dictionary(d)
-
-# def sw_score(tweet_text, location):
-#     matrix = [[0 for x in xrange(len(location))] 
-#               for x in xrange(len(tweet_text))]
-
-#     for i in range(1, len(tweet_text)):
-#         for j in range(1, len(location)):
-#             matrix[i][j] = max([0, 
-#                                 matrix[i-1][j] - 1, 
-#                                 matrix[i][j-1] - 1, 
-#                                 matrix[i-1][j-1]
-#                                 + equal(tweet_text[i-1], location[j-1])])
-    
-#     return float(max([max(row) for row in matrix])) / len(location)
-
-
-# def equal(char1, char2):
-#     if char1 == char2:
-#         return 1
-#     else:
-#         return -1
 
 
 def brutforce_needlemen_wunsch(tweets, locations):
@@ -120,9 +91,9 @@ def brutforce_needlemen_wunsch(tweets, locations):
         for location in locations:
             num_location_words = len(location.split(' '))
             for i in range(0, len(tweet_words)):
-                score = fuzz.ratio(location, 
+                score = Levenshtein.ratio(location, 
                                    ' '.join(tweet_words[i:i+num_location_words]))
-                if score >= 90:
+                if score >= 0.90:
                     matches.append((location, score))
 
         if d.get(tweet[0]):
@@ -130,20 +101,28 @@ def brutforce_needlemen_wunsch(tweets, locations):
         else:
             d[tweet[0]] = [(tweet[1], matches)]
 
-    print('\nBrutforce Needlemen-Wunsch Algorithm\n')
+    print('\nTokenised Needlemen-Wunsch Algorithm\n')
     print_matches_dictionary(d)
 
+    # ideal_locations = []
+    # for matches in d.values():
+    #     for match_tuple in matches:
+    #         for match in match_tuple[1]:
+    #             ideal_locations.append(match[0]) 
 
-def baseline_needleman_wunsch(tweets, locations):
+    # return ideal_locations
+
+
+def whole_string_needleman_wunsch(tweets, locations):
     """ The baseline Needlemen-Wunsch alogithm which calculates the
-        Levenshtien score of the entire tweet body against a location name"""
+        Levenshtein score of the entire tweet body against a location name"""
     d = {}
     
     for tweet in tweets:
         matches = []
         for location in locations:
-            score = fuzz.ratio(location, tweet[2])
-            if score >= 60:
+            score = Levenshtein.ratio(location, tweet[2]) 
+            if score >= 0.60:
                 matches.append((location, score))
 
         if d.get(tweet[0]):
@@ -151,7 +130,7 @@ def baseline_needleman_wunsch(tweets, locations):
         else:
             d[tweet[0]] = [(tweet[1], matches)]
 
-    print('\nBaseline Needlemen-Wunsch Algorithm\n')
+    print('\nWhole String Needlemen-Wunsch Algorithm\n')
     print_matches_dictionary(d)
 
 def print_matches_dictionary(d):
@@ -192,14 +171,13 @@ def main():
 
     print_tweets_text(tweets)
 
-    #print(timeit.timeit(lambda: baseline_needleman_wunsch(tweets, locations), 
-    #                    number=1))
-    
-    print(timeit.timeit(lambda: brutforce_needlemen_wunsch(tweets, locations), 
+    print(timeit.timeit(lambda: whole_string_needleman_wunsch(tweets, locations), 
                         number=1))
     
-    # This algorithm takes a very long time to run on a single tweet
-    # print(timeit.timeit(lambda: smith_waterman(tweets, locations), number=1))
+    #print(timeit.timeit(lambda: brutforce_needlemen_wunsch(tweets, locations), 
+    #                    number=1))
+    
+    print(timeit.timeit(lambda: smith_waterman(tweets, locations), number=1))
 
     print(timeit.timeit(lambda: nw_sw_combined(tweets, locations), number=1))
 
