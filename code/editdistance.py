@@ -79,7 +79,7 @@ def smith_waterman(tweets, locations):
     print_matches_dictionary(d)
 
 
-def brutforce_needlemen_wunsch(tweets, locations):
+def tokenised_needlemen_wunsch(tweets, locations):
     """ Tokenize the location and the tweets into words,
         and compare """ 
     d = {}
@@ -93,7 +93,7 @@ def brutforce_needlemen_wunsch(tweets, locations):
             for i in range(0, len(tweet_words)):
                 score = Levenshtein.ratio(location, 
                                    ' '.join(tweet_words[i:i+num_location_words]))
-                if score >= 0.90:
+                if score >= 0.95:
                     matches.append((location, score))
 
         if d.get(tweet[0]):
@@ -174,8 +174,8 @@ def main():
     print(timeit.timeit(lambda: whole_string_needleman_wunsch(tweets, locations), 
                         number=1))
     
-    #print(timeit.timeit(lambda: brutforce_needlemen_wunsch(tweets, locations), 
-    #                    number=1))
+    print(timeit.timeit(lambda: tokenised_needlemen_wunsch(tweets, locations), 
+                        number=1))
     
     print(timeit.timeit(lambda: smith_waterman(tweets, locations), number=1))
 

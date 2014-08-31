@@ -7,6 +7,11 @@ description = """A C extension that uses a modified version
 of the Levenshtein distance algorithm to calculate fuzzy matches 
 for substrings.
 
+Usage:
+import subdist
+distance = subdist.substring(u"spam", u"I sought only ham.")
+score = subdist.get_score(u"ham", u"But I found only spam")
+
 MIT License
 """
 

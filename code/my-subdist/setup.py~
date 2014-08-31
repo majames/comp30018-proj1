@@ -1,6 +1,6 @@
 from distutils.core import setup, Extension
 
-subdist_module = Extension('mysubdist',
+subdist_module = Extension('subdist',
                     sources = ['subdist.c'])
 
 description = """A C extension that uses a modified version 
@@ -15,7 +15,7 @@ score = subdist.get_score(u"ham", u"But I found only spam")
 MIT License
 """
 
-setup (name = 'mysubdist',
+setup (name = 'subdist',
        version = '0.2.1',
        description = 'Substring edit distance',
        long_description = description,

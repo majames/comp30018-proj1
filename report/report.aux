@@ -4,27 +4,32 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Lowercase Input and Removal of Non-Alphabetic Characters (Excluding Space)}{1}}
 \newlabel{subsec:alpha}{{2.1}{1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Word Stemming}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Removal of Stop Words And Excess White Space}{1}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Stemming Tweets}}{2}}
 \newlabel{table:stem-tweet}{{1}{2}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Stemming Locations}}{2}}
 \newlabel{table:stem-location}{{2}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Removal of Stop Words And Excess White Space}{2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Location Name Matches Before Stop Word And Small Word Removal}}{2}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Undesirable Location Name Matches Before Stop Word Removal (Smith-Waterman and Sub-Distance Algorithms)}}{2}}
+\newlabel{table:stop-words}{{3}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Removal of Similar Locations}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Removal of Duplicate Locations}{2}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}String Approximation Algorithms}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Needleman-Wunsch Global Edit Distance}{2}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Removal of Similar Location Names}}{3}}
+\newlabel{table:similar-locals}{{4}{3}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Input Data Size Reduction}}{3}}
+\newlabel{table:input-table}{{5}{3}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Approximate String Matching Algorithms And Results}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Needleman-Wunsch: Global Edit Distance Baselines}{3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}N-W Whole String Comparison Baseline}{3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}N-W Tokenised Words Comparison Baseline}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Smith-Waterman: Local Edit Distance}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Sub-Distance: Needlemen-Wunsch and Smith-Waterman Combined}{4}}
 \bibcite{lamport94}{1}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Significant Repeat in Location Names}}{3}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Input Data Size Reduction}}{3}}
-\newlabel{table:input-table}{{3}{3}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}N-W Baseline Implementation}{3}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}N-W Word Tokens Implementation}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Local Edit Distance}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Needlemen-Wunsch and Smith-Waterman Combined}{3}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Comparison of Algorithm Run Times (per Tweet)}}{4}}
-\newlabel{figure:times-graph}{{3}{4}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{4}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{4}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Sample Tweet And Matches}}{5}}
-\newlabel{table:alg-table}{{4}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Sub-Distance Edit Distance Matrix Initialisation}}{5}}
+\newlabel{table:subdist}{{6}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusion}{5}}
+\newlabel{fig:times-graph}{{4}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Comparison of Algorithm Run Times For A Given Tweet Compared To All Of the Location Queries (over a sample of 1000 Tweets for Tokenised N-W and a sample of 10000 Tweets For The Remaining Algorithms)}}{6}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Sample Tweet And Matches}}{6}}
+\newlabel{table:alg-table1}{{7}{6}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Sample Tweet And Matches}}{7}}
+\newlabel{table:alg-table2}{{8}{7}}
