@@ -28,12 +28,7 @@ def modify_us_locations(locations, flag):
     # make all the locations lower-case strings
     locations = [location.lower() for location in locations]
 
-    if flag == '-C':
-        # remove the substring '(historical)' from location if it is present
-        locations = [re.sub(r'\(historical\)', '', location) 
-                     for location in locations]
-
-    if flag == '-B' or flag == '-C':
+    if flag == '-B':
         # remove the non-alphabetic characters from locations (excluding space)
         locations = [re.sub(r'[^a-z ]', '', location) 
                      for location in locations]
@@ -102,7 +97,8 @@ def main():
         src_filename = sys.argv[2]
         dest_filename = sys.argv[3] 
     else:
-        print('usage: extractor.py -FLAG source_file destination_file')
+        print('usage: us-locations-extractor.py' 
+              '-FLAG source_file destination_file')
         sys.exit()
 
 
