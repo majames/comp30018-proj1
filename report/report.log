@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.8.4)  31 AUG 2014 17:04
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.8.4)  2 SEP 2014 13:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -85,21 +85,32 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-) (./report.aux)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip43
+\bibsep=\skip44
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count91
+) (./report.aux
+
+LaTeX Warning: Label `table:alg-table2' multiply defined.
+
+)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -137,16 +148,16 @@ LaTeX Font Info:    ... okay on input line 8.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count91
+\scratchcounter=\count92
 \scratchdimen=\dimen113
 \scratchbox=\box26
-\nofMPsegments=\count92
-\nofMParguments=\count93
+\nofMPsegments=\count93
+\nofMParguments=\count94
 \everyMPshowfont=\toks16
-\MPscratchCnt=\count94
+\MPscratchCnt=\count95
 \MPscratchDim=\dimen114
-\MPnumerator=\count95
-\makeMPintoPDFobject=\count96
+\MPnumerator=\count96
+\makeMPintoPDFobject=\count97
 \everyMPtoPDFconversion=\toks17
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -193,41 +204,36 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 11.
+(Font)              <12> on input line 12.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 11.
+(Font)              <8> on input line 12.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 11.
+(Font)              <6> on input line 12.
 
-Underfull \hbox (badness 10000) in paragraph at lines 19--21
-
- []
-
-
-Overfull \hbox (7.33513pt too wide) in paragraph at lines 22--22
+Overfull \hbox (7.33513pt too wide) in paragraph at lines 21--21
 []\OT1/cmr/bx/n/12 Lowercase In-put and Re-moval of Non-Alphabetic Char-ac-ters
  (Ex-clud-ing Space) 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--32
+Underfull \hbox (badness 10000) in paragraph at lines 28--31
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 29--32
+Underfull \hbox (badness 10000) in paragraph at lines 28--31
 
  []
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 36.
+(Font)              <10.95> on input line 35.
 
-Underfull \hbox (badness 1755) in paragraph at lines 42--42
+Underfull \hbox (badness 1755) in paragraph at lines 41--41
 []\OT1/cmr/m/n/10.95 hanh khang wed friend fabul
  []
 
 
-Underfull \hbox (badness 1642) in paragraph at lines 42--43
+Underfull \hbox (badness 1642) in paragraph at lines 41--42
 []\OT1/cmr/m/n/10.95 whi foursquar made break-fast
  []
 
@@ -235,127 +241,130 @@ Underfull \hbox (badness 1642) in paragraph at lines 42--43
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 68--71
+Underfull \hbox (badness 10000) in paragraph at lines 67--70
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--71
+Underfull \hbox (badness 10000) in paragraph at lines 67--70
 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 1097) in paragraph at lines 97--97
+Underfull \hbox (badness 1097) in paragraph at lines 96--96
 \OT1/cmr/m/n/10.95 sav-ior free lutheran church, abid sav-
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 140--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--154
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--154
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 159--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--168
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 172--174
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 194--197
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 194--197
+
+ []
+
+(./report.bbl) <times1.jpg, id=24, 607.26875pt x 341.275pt>
+File: times1.jpg Graphic file (type jpg)
+ <use times1.jpg>
+Package pdftex.def Info: times1.jpg used on input line 203.
+(pdftex.def)             Requested size: 485.81566pt x 273.02036pt.
+
+Overfull \hbox (2.11879pt too wide) in paragraph at lines 203--205
+ [][] 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
+LaTeX Warning: `h' float specifier changed to `ht'.
 
- []
+[5] [6 <./times1.jpg>] [7] (./report.aux)
 
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 138--142
+LaTeX Warning: There were multiply-defined labels.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 138--142
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 138--142
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 148--151
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 148--151
-
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 156--160
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--160
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 156--160
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 163--165
-
- []
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 166.
-
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 166.
-
-Underfull \hbox (badness 10000) in paragraph at lines 169--171
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 191--193
-
- []
-
-<times1.jpg, id=22, 607.26875pt x 341.275pt>
-File: times1.jpg Graphic file (type jpg)
- <use times1.jpg>
-Package pdftex.def Info: times1.jpg used on input line 196.
-(pdftex.def)             Requested size: 485.81566pt x 273.02036pt.
-
-Overfull \hbox (2.11879pt too wide) in paragraph at lines 196--198
- [][] 
- []
-
-[5] [6 <./times1.jpg>] [7] (./report.aux) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 2079 strings out of 494985
- 29714 string characters out of 6180357
- 102416 words of memory out of 5000000
- 5286 multiletter control sequences out of 15000+600000
- 9509 words of font info for 33 fonts, out of 8000000 for 9000
+ 2409 strings out of 494985
+ 33535 string characters out of 6180357
+ 111292 words of memory out of 5000000
+ 5613 multiletter control sequences out of 15000+600000
+ 9157 words of font info for 32 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 37i,9n,23p,708b,305s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb>
-Output written on report.pdf (7 pages, 151357 bytes).
+ 38i,9n,23p,775b,305s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmti10.pfb>
+Output written on report.pdf (7 pages, 165571 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 69 PDF objects out of 1000 (max. 8388607)
+ 48 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

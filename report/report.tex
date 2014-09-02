@@ -4,6 +4,7 @@
 \usepackage[left=20mm,right=20mm,top=20mm,bottom=20mm]{geometry}
 \usepackage[pdftex]{graphicx}
 \usepackage[hyphens]{url}
+\usepackage{natbib}
 
 \begin{document}
 
@@ -11,22 +12,20 @@
 \maketitle
 
 \section{Introduction}
-
-The objective of Project 1 was to identify location names (ASCII strings) present within the body of a Tweet (an ASCII string between 1 and 140 characters in length). Edit distance matching techniques, including Variants of Global Edit Distance (Needleman-Wunsch) and Local Edit Distance (Smith-Waterman) matching algorithms, were explored in Project 1. 
+The objective of Project 1 was to identify location names (ASCII strings) present within the body of a Tweet (an ASCII string between 1 and 140 characters in length). Edit distance matching techniques, including variants of Needleman-Wunsch (Global Edit Distance) and  Smith-Waterman (Local Edit Distance) matching algorithms, were explored in Project 1. 
 
 \section{Preprocessing Input Data}  
 
-Several heuristics were employed in the preprocessing of the tweets and locations input files to improve the performance of the string approximation algorithms explored in Project 1.\\\\
-The reduction in the size of the input tweet and locations files, due to the preprocessing steps outlined below, are summarised in Table \ref{table:input-table}.
+Several heuristics were employed in the preprocessing of the tweets and locations input files to improve the performance of the string approximation algorithms explored in Project 1. The reduction in the size of the input tweet and locations files, due to the preprocessing steps outlined below, are summarised in Table \ref{table:input-table}.
 
 \subsection{Lowercase Input and Removal of Non-Alphabetic Characters (Excluding Space)}
 \label{subsec:alpha}
 
-To reduce the sample space, as specified as a requirement of the project specification, all non-alphabetic characters, excluding space, were removed from the body of the tweets. Additionally, all alphabetic characters within a tweet were made lower case. After this stage of tweet preprocessing it would have been impossible for a location name with non-alphabetic characters and/or uppercase letters to match a substring within any tweet bodies. Therefore, non-alphabetic characters were removed from the locations list and the alphabetic characters within the locations list were made lower case to ensure the location names remained consistent with the modified tweet bodies.
+To reduce the sample space, and as specified as a requirement of the project specification, all non-alphabetic characters, excluding space, were removed from the body of the tweets and location names. This drastically reduced the alphabet size and the number of characters in the locations and tweets file.
 
 \subsection{Word Stemming}
 
-Stemming is the process of reducing inflicted words to their stem (base form).A Porter Stemmer algorithm was used in the preprocessing of the location and tweet files. \\\\
+Stemming is the process of reducing inflicted words to their stem (base form) \citep{pm-stem}. A Porter Stemmer algorithm was used in the preprocessing of the location and tweet files. \\\\
 The Porter Stemmer algorithm was found to further distort a subset of misspelled words within the tweet bodies, however the Porter Stemmer was also capable of (partially) correcting miss-spelled location words. Further, the Porter Stemmer reduced the sample space of the problem by introducing consistency in tweet words referring to the same location and reducing the number of characters in both the preprocessed tweet and location files.\\\\
 A sample of differences between tweet and location strings with and without the Porter Stemmer preprocessing step can be seen in Tables \ref{table:stem-tweet} and \ref{table:stem-location}.
    
@@ -65,9 +64,9 @@ A sample of differences between tweet and location strings with and without the 
 \end{table}
 
 \subsection{Removal of Stop Words And Excess White Space}
-A large amount of tweets and locations contained words which were less than 3 characters in length and words which were extremely common in the English language (especially after preprocessing stage \ref{subsec:alpha}). Common words and words of one to two characters of length carried little entropy when determining whether the Twitter user was Tweeting about a location or using the words in another context (Table \ref{table:stop-words}).\\\\
-Words of one-two characters and common words were removed from both the tweets and the locations list to further reduce processing time and avoid false positives. The list of stop words, contained within the NLPK library for python, was used to remove stop words from he locations and tweet texts.\\\\
-It is worth noting that stop words can cause problems when searching for phrases (location names) that include them. However, after examination of the location and tweet files it was determined that the benefits of removing stop words outweighed the destruction of an insignificant amount of location names. 
+A large amount of tweets and locations contained words which were less than 3 characters in length and words which were extremely common in the English language (especially after preprocessing stage \ref{subsec:alpha}). Common words and words of one to two characters of length carried little entropy\citep{ra-stop} when determining whether the Twitter user was Tweeting about a location or using the words in another context (Table \ref{table:stop-words}).\\\\
+Words of one-two characters and common words were removed from both the tweets and the locations list to further reduce processing time and avoid false positives. The list of stop words, contained within the NLPK library for python, was used to remove stop words from the locations and tweet texts.\\\\
+It is worth noting that stop words can cause problems when searching for location names (phrases) that include them \citep{ra-stop}. However, after examination of the location and tweet files it was determined that the benefits of removing stop words outweighed the destruction of an insignificant amount of location names. 
 
 \begin{table}[h]
 	\centering
@@ -106,7 +105,7 @@ After thorough inspection of the locations file, significant overlap between the
 After performing the preceding preprocessing steps, the locations list contained various duplicate entries. The duplicate locations were removed to avoid unnecessary processing of said duplicates.
 
 \begin{table} [th]
-\caption{Input Data Size Reduction}
+\caption{Preprocessing Input Data Size Reduction}
 \centering
 	\begin{tabular}{| c | c | c |}
 	\hline
@@ -130,44 +129,48 @@ After performing the preceding preprocessing steps, the locations list contained
 
 \subsection{Needleman-Wunsch: Global Edit Distance Baselines}
 
-\textbf{Needleman-Wunsch}, N-W, is a popular dynamic programming algorithm for calculating the edit distance between two strings. An edit distance is a metric for quantifying how dissimilar two strings are to one another. Edit distance functions associate a cost value with the basic operations of insertion, deletion, replacement and matching of characters required for conversion of one string into another string. The N-W algorithms implemented in project 1 used a \textbf{Levenshtein Distance} cost function to assign a cost of 1 for insertions, deletions and replacements and a cost of 0 for matches.\\\\
-Two naive variants of N-W algorithms were established as algorithm baselines. The N-W baselines were used to allow us to determine the intrinsic difficulty of the Project 1 task and allow us to gauge the performance of other proposed solutions.
+\textbf{Needleman-Wunsch}, N-W, is a popular dynamic programming algorithm for calculating the edit distance between two strings \citep{nw}. The N-W algorithms implemented in project 1 used a \textbf{Levenshtein Distance} cost function to assign a cost of 1 for insertions, deletions and replacements and a cost of 0 for matches. The cost/score of tweet-location matches were normalised with respect to the lengths of the strings:
+\begin{center}
+$score = \frac{len(str1) + len(str2) - len(editdistance)}{len(str1) + len(str2)}$
+\end{center}
+Two naive variants of N-W algorithms were established as algorithm baselines. The N-W baselines were used to determine the intrinsic difficulty of the Project 1 task and gauge the performance of more advanced solutions.
 
 \subsubsection{N-W Whole String Comparison Baseline}
 
 The first baseline method of N-W implementation involved comparing the whole body of tweet text against a location.\\\\
-The run time of the N-W Whole String algorithm was extremely fast, with an average processing time of 2.884 seconds per tweet (see Figure \ref{fig:times-graph} for comparison of algorithm run times). The algorithmic complexity of the N-W Whole String algorithm is $O(nm)$ where n is the length of a location and m is the character length of a tweet. \\\\ 
-This naive solution yielded poor matching results (Table \ref{table:alg-table1} and \ref{table:alg-table2}). The poor results can be attributed to the significant difference in the location and tweet lengths. The significant disparity between many location and tweet lengths resulted in a large number of deletions required for conversion of a tweet to a location, thus an unacceptably high Levenshtein difference for tweets which had location names surrounded by other words. Reducing the required threshold score for a location to be considered a match did not alleviate the poor performance, as the algorithm would then return an unacceptable amount of false positives.\\\\
-The N-W Whole String Comparison algorithm provided an excellent runtime baseline as a goal.
+The run time of the N-W Whole String algorithm was extremely fast, with an average processing time of 2.884 seconds to compare a tweet to all locations (see Figure \ref{fig:times-graph} for comparison of algorithm run times). The algorithmic complexity of the N-W Whole String algorithm is $O(nm)$ where n is the length of a location and m is the character length of a tweet\citep{nw}. \\\\ 
+This naive solution yielded poor matching results (Table \ref{table:alg-table1} and \ref{table:alg-table2}). The poor results can be attributed to the significant difference in the location and tweet lengths. The significant disparity between many location and tweet lengths required a large number of deletions for conversion of a tweet string to a location string, thus an unacceptably low score for tweets which had location names surrounded by other words. Reducing the required threshold score for a location to be considered a match did not alleviate the poor performance, as the algorithm would then return an unacceptable amount of false positives. After experimentation, a score of 0.60 was considered to best locations to tweets.\\\\
+The N-W Whole String Comparison algorithm provided an excellent runtime baseline as a goal (Figure \ref{fig:times-graph}).
 
 % insert tables and figures supporting argument and maths
 
 
 \subsubsection{N-W Tokenised Words Comparison Baseline}
 
-To avoid the problems associated with comparing location and tweet bodies of vastly different lengths the location queries and tweet bodies were tokenised into words. A location containing N words was compared with all tweet sub-strings containing N words.\\\\
-This brutforce style algorithm had better matching capabilities as seen in the tweet exerts of Table \ref{table:alg-table1} and \ref{table:alg-table2}. However, the running time of N-W Word Tokens was significantly larger, with an average run time of 17.49 seconds per tweet (Figure \ref{fig:times-graph}).\\\\
-The N-W Tokenised Words Comparison provided excellent location-tweet matching baseline goal.
+To avoid the problems associated with comparing location and tweet bodies of vastly different lengths, the location queries and tweet bodies were tokenised into words. A location containing N words was compared with all tweet sub-strings containing N words.\\\\
+This brutforce style algorithm had better matching capabilities as seen in the tweet exerts of Table \ref{table:alg-table1} and \ref{table:alg-table2}. A matching score threshold of 0.95 was determined to give the best results.\\\\ 
+Enumerating each combination of N-words sub-strings for a tweet against every N-word location added significant overhead to N-W Tokenised Words algorithm. Therefore, as expected, the running time of N-W Word Tokens was significantly larger, with an average run time of 17.49 seconds per tweet (Figure \ref{fig:times-graph}).\\\\
+The N-W Tokenised Words Comparison provided excellent location-tweet matching baseline goal (Table \ref{table:alg-table1} and \ref{table:alg-table2}).
 
 % Add tables and table references and mathamatical analysis
 
 \subsection{Smith-Waterman: Local Edit Distance}
 
-The Smith-Waterman (S-W) algorithm finds the maximum length of the substring in common between two strings. S-W was considered as a candidate solution due to exhibiting the same complexity as N-W Whole String Comparison, $O(nm)$, combined with the potential for the better location-tweet matching, associated with the Tokenised N-W baseline, due to  S-W ignoring the disparity in length between a tweet and location.\\\\
-A score of 1 was assigned for a match and -1 for a deletion, insertion and replacement. The S-W match threshold was normalised by dividing the length of the matching substring by the minimum length of the location string compared to the tweet string. A threshold score greater than or equal to 0.90 was considered to be a match (as determined by subjective human judgement).\\\\
+The Smith-Waterman (S-W) algorithm finds the maximum length of the substring in common between two strings \citep{sf-sw}. S-W was considered as a candidate solution to Project 1 geo-location as S-W has the same complexity as N-W Whole String Comparison, $O(nm)$\cite{go-sw}, combined with the potential for the better location-tweet matching, associated with the Tokenised N-W baseline, due to  S-W ignoring the disparity in length between a tweet and location.\\\\
+A score of 1 was assigned for a match and -1 for a deletion, insertion and replacement. The S-W match threshold was normalised by dividing the length of the matching substring by the minimum of the length of the location string and tweet string. A threshold score greater than or equal to 0.90 was considered to be a match (as determined by subjective human judgement).\\\\
 The S-W algorithm produced a runtime of 3.942 seconds. The S-W closely approximated the N-W Whole String baseline runtime (Figure \ref{fig:times-graph}).\\\\      
 The S-W closely matched the goal matching baseline of the N-W tokenised words algorithm (Table \ref{table:alg-table1} and \ref{table:alg-table2}). However, often S-W would return more matches than N-W tokenised words, as S-W would NOT penalise location words which started mid-word in the tweet text. The additional matches returned by S-W were often considered inappropriate as they were often sub-words contained within bigger words. For example, the location 'ash' was returned by the S-W and not by N-W tokenised words, as S-W had found a match within the word 'washington'.    
 
 \subsection{Sub-Distance: Needlemen-Wunsch and Smith-Waterman Combined}
 
-The runtime and matching of the Smith-Waterman was a definite step forward in finding an edit-distance based solution to the string approximation task of Project 1. However, the disadvantage of location strings being matched anywhere within the longer tweet string, including mid-word, without penalty resulted in additional false positives. The Sub-Distance algorithm was developed to address this S-W undesirable characteristic.\\\\
-Sub-Distance involved implementing two small changes to the N-W whole string matching algorithm:
-\begin{itemize}
-\item The initialisation of the row associated with the empty character in the location name and the tweet text was altered to have an edit distance score associated with the depth of a character in a word NOT the whole string (Table \ref{table:subdist}). The intuition behind this change is that location matches that start on empty space or a word should not be penalised, however location matches that start mid-word should be penalised in relation to how deep into the word said match is.
-\item Once the scores of the bottom row had been calculated, the lowest score was taken as the edit-distance cost, rather than the score in the rightmost corner. This effectively meant that we didn't care how many characters we skipped after we stopped matching. 
-\end{itemize}
+The runtime and matching of the Smith-Waterman algorithm was a definite step forward in finding an edit-distance based solution to the string approximation task of Project 1. However, the disadvantage of location strings being matched anywhere within a longer tweet string, including mid-word, without penalty resulted in additional false positives. The Sub-Distance algorithm was developed to address this undesirable S-W characteristic.\\\\
+Sub-Distance involved implementing two small changes to the N-W whole string matching algorithm to significantly improve its matching performance:
+\begin{enumerate}
+\item The initialisation of the row associated with the empty character in the location name and the tweet text was altered to have an edit distance score associated with the depth of a character in a word NOT the whole string (Table \ref{table:subdist}). The intuition behind this change is that location matches that start the start of a word should not be penalised, however location matches that start mid-word should be penalised in relation to how deep into the word said match is.
+\item Once the scores of the bottom row had been calculated, the lowest score was taken as the edit-distance cost, rather than the score in the rightmost corner. This meant that we didn't care about how many characters we skipped after we stopped matching the location name within the tweet text (a reasonable assumption). 
+\end{enumerate}
 Sub-Distance has a slightly smaller runtime than S-W and N-W Whole String, 2.83 seconds. Sub-Distances runtime result was expected as both N-W whole string and S-W have the same complexity as Sub-Distance, $O(nm)$.\\\\
-Sub-Distance achieved closer matching to the N-W Tokenised Words baseline than S-W (Table \ref{table:alg-table1} and \ref{table:alg-table2}). However, Sub-Distance generated more false-positives than N-W Tokenised Words, as Sub-Distance still suffered from not penalising location matches that matched the prefix of a larger word (similar to S-W).
+Sub-Distance still generated more false-positives compared to N-W Tokenised Words, as Sub-Distance still suffered from not penalising location matches that matched the prefix of a larger word (similar to S-W). However, Sub-Distance achieved closer matching to the N-W Tokenised Words baseline than S-W, as it was less likely to match location names that started mid-word (Table \ref{table:alg-table1} and \ref{table:alg-table2}). 
 
 \begin{table}[ht]
 	\centering
@@ -188,17 +191,21 @@ Sub-Distance achieved closer matching to the N-W Tokenised Words baseline than S
 
 \section{Conclusion}
 
-Four methods were considered for string approximation of location names that reside within tweet bodies. Pure N-W suffered in matching performance due to the large disparity in matching string sizes. Tokenised N-W returned the most suitable matches, however suffered from an extremely long processing time. S-W found the middle ground between pure N-W and Tokenised N-W, providing location matching from within a tweet with a better runtime, however returned more false positives due to matching location names within words. Sub-Distance, employed clever initialisation and exit parameters to Pure N-W to achieve better matching than S-W with the same complexity.\\\\
-The shortest runtime for a single tweet to be compared to all queries was 2.8 seconds (Sub-Distance). Therefore, to process all 3.6 million preprocessed tweets against all of the preprocessed locations would take over 116 days. If the whole Location-Tweet sample space had to be analysed faster methods of string approximation, such as the use of Tries or N-gram matching algorithms, are an area for further research. 
+Four methods were considered for string approximation of location names that reside within tweet bodies. Sub-Distance gave the best overall results, by employing clever initialisation and exit parameters to the N-W algorithm.\\\\
+All algorithms explored as part of Project 1 often exhibited false positives when considering location names that could also be used in language when NOT referring to a location. Therefore, a future area of research would include algorithms that take into account the context in which words are used.\\\\
+Further, the shortest runtime for a single tweet to be compared to all queries was 2.8 seconds (Sub-Distance). Therefore, to process all 3.6 million preprocessed tweets against all of the preprocessed locations would take over 116 days. If the whole Location-Tweet sample space had to be analysed faster methods of string approximation, such as the use of Tries or N-gram matching algorithms, are an area for further research. 
+
+\bibliographystyle{plain}
+\bibliography{proj1bib}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[scale=0.8]{times1.jpg}
 	\label{fig:times-graph}
-	\caption{Comparison of Algorithm Run Times For A Given Tweet Compared To All Of the Location Queries (over a sample of 1000 Tweets for Tokenised N-W and a sample of 10000 Tweets For The Remaining Algorithms)}
+	\caption{Comparison of Algorithm Run Times For A Given Tweet Compared To All Of the Location Queries (averages taken from a random sample of 1000 Tweets for Tokenised N-W and a sample of 10000 Tweets For The Remaining Algorithms)}
 \end{figure}
 
-\begin{table} [t]
+\begin{table} [h]
 \caption{Sample Tweet And Matches}
 \begin{center}
 	\begin{tabular}{| p{5.5cm} | p{10cm} |}
@@ -220,7 +227,7 @@ The shortest runtime for a single tweet to be compared to all queries was 2.8 se
 \label{table:alg-table1}
 \end{table}
 
-\begin{table} [t]
+\begin{table} [h]
 \caption{Sample Tweet And Matches}
 \begin{center}
 	\begin{tabular}{| p{5.5cm} | p{10cm} |}
@@ -234,7 +241,7 @@ The shortest runtime for a single tweet to be compared to all queries was 2.8 se
 	\hline
 	Brutforce Needlemen-Wunsch & ('america', 93), ('american', 100), ('american red cross', 100), ('americana', 94), ('blood river', 91), ('build', 100), ('check', 100), ('cross', 100), ('driver', 91), ('mcross', 91), ('moffat', 100), ('moffatt', 92), ('readi cross', 90), ('red', 100), ('red cross', 100), ('reed cross', 95), ('ucross', 91), ('welcom', 100)\\
 	\hline
-	Waterman-Smith & ('ame', 1.0), ('ameri', 1.0), ('america', 1.0), ('american', 1.0), ('american red cross', 1.0), ('build', 1.0), ('check', 1.0), ('cross', 1.0), ('elco', 1.0), ('eri', 1.0), ('erica', 1.0), ('fat build', 1.0), ('heck', 1.0), ('ive', 1.0), ('mer', 1.0), ('moffat', 1.0), ('red', 1.0), ('red cross', 1.0), ('rive', 1.0), ('ross', 1.0), ('tail', 1.0), ('welcom', 1.0)]\\
+	Waterman-Smith & ('ame', 1.0), ('ameri', 1.0), ('america', 1.0), ('american', 1.0), ('american red cross', 1.0), ('build', 1.0), ('check', 1.0), ('cross', 1.0), ('elco', 1.0), ('eri', 1.0), ('erica', 1.0), ('fat build', 1.0), ('heck', 1.0), ('ive', 1.0), ('mer', 1.0), ('moffat', 1.0), ('red', 1.0), ('red cross', 1.0), ('rive', 1.0), ('ross', 1.0), ('tail', 1.0), ('welcom', 1.0)\\
 	\hline
 	N-W and S-W Combined & ('ame', 1.0), ('ameri', 1.0), ('america', 1.0), ('american', 1.0), ('american red cross', 1.0), ('build', 1.0), ('check', 1.0), ('cross', 1.0), ('moffat', 1.0), ('red', 1.0), ('red cross', 1.0), ('reed cross', 0.9), ('welcom', 1.0)\\
 	\hline
@@ -243,15 +250,28 @@ The shortest runtime for a single tweet to be compared to all queries was 2.8 se
 \label{table:alg-table2}
 \end{table}
 
-\begin{thebibliography}{9}
+\begin{table} [t]
+\caption{Sample Tweet And Matches}
+\begin{center}
+	\begin{tabular}{| p{5.5cm} | p{10cm} |}
+	\hline
+	\multicolumn{2}{|p{15.5cm}|}{\textbf{Tweet Text:} krislan webstock second love hear speak
+} \\
+	\hline
+	\textbf{Algorithm} & \textbf{Match-Score Pairs}\\
+	\hline
+	Baseline Needlemen-Wunsch & \\
+	\hline
+	Brutforce Needlemen-Wunsch & ('love', 1.0), ('speak', 1.0)\\
+	\hline
+	Waterman-Smith & ('cond', 1.0), ('ear', 1.0), ('isl', 1.0), ('isla', 1.0), ('kri', 1.0), ('love', 1.0), ('peak', 1.0), ('seco', 1.0), ('speak', 1.0), ('stock', 1.0)\\
+	\hline
+	N-W and S-W Combined & ('kri', 1.0), ('love', 1.0), ('seco', 1.0), ('second cove', 0.909), ('speak', 1.0)\\
+	\hline
+	\end{tabular}
+\end{center}
+\label{table:alg-table2}
+\end{table}
 
-\bibitem{lamport94}
-  Leslie Lamport,
-  \emph{\LaTeX: a document preparation system}.
-  Addison Wesley, Massachusetts,
-  2nd edition,
-  1994.
-
-\end{thebibliography}
 
 \end{document}

@@ -1,0 +1,32 @@
+\begin{thebibliography}{1}
+
+\bibitem{go-sw}
+O.~Gotoh.
+\newblock improved algorithm for matching biological sequences.
+\newblock {\em Journal of molecular biology}, 1982.
+
+\bibitem{nw}
+S.B. Needleman and C.D. Wunsch.
+\newblock general method applicable to the search for similarities in the amino
+  acid sequence of two proteins.
+\newblock {\em Journal of molecular biology}, 1970.
+
+\bibitem{pm-stem}
+Mirko Popovic and Peter Willett.
+\newblock The effectiveness of stemming for natural-language access to slovene
+  textual data.
+\newblock {\em Journal of the American Society for Information Science},
+  43(5):384 -- 390, 1992.
+
+\bibitem{ra-stop}
+Anand Rajaraman and Jeffrey~David Ullman.
+\newblock {\em Mining of Massive Datasets [electronic resource]. / Anand
+  Rajaraman, Jeffrey David Ullman.}
+\newblock Cambridge : Cambridge University Press, 2011., 2011.
+
+\bibitem{sf-sw}
+T.F. Northern Michigan~University. Smith and M.S. Waterman.
+\newblock Identification of common molecular subsequences.
+\newblock {\em Journal of molecular biology}, 1981.
+
+\end{thebibliography}
